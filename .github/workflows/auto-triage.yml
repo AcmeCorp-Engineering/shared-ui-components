@@ -43,3 +43,9 @@ jobs:
               });
               console.log(`Added labels: ${labels.join(', ')}`);
             }
+
+      - name: Add to Project
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/AcmeCorp-Engineering/projects/1
+          github-token: ${{ secrets.PROJECT_TOKEN }}

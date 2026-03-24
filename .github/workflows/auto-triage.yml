@@ -6,7 +6,6 @@ on:
 
 permissions:
   issues: write
-  repository-projects: write
 
 jobs:
   triage:
@@ -22,7 +21,6 @@ jobs:
             const text = title + ' ' + body;
             const labels = [];
 
-            // キーワードベースの自動ラベル付け
             if (text.includes('bug') || text.includes('バグ') || text.includes('不具合')) {
               labels.push('bug');
             }
@@ -45,10 +43,3 @@ jobs:
               });
               console.log(`Added labels: ${labels.join(', ')}`);
             }
-
-      - name: Add to Project
-        if: always()
-        uses: actions/add-to-project@v1.0.2
-        with:
-          project-url: https://github.com/orgs/AcmeCorp-Engineering/projects/1
-          github-token: ${{ secrets.PROJECT_TOKEN }}

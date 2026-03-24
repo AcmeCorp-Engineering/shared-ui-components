@@ -1,0 +1,28 @@
+name: "✨ 機能要望"
+description: "新機能や改善を提案する"
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: "概要"
+      description: "提案する機能の概要を記述してください"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: "背景・動機"
+      description: "なぜこの機能が必要ですか？"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "希望優先度"
+      options:
+        - "High"
+        - "Medium"
+        - "Low"

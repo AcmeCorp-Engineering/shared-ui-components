@@ -1,0 +1,54 @@
+name: Auto Triage Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  repository-projects: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto Label based on content
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.toLowerCase();
+            const body = (issue.body || '').toLowerCase();
+            const text = title + ' ' + body;
+            const labels = [];
+
+            // キーワードベースの自動ラベル付け
+            if (text.includes('bug') || text.includes('バグ') || text.includes('不具合')) {
+              labels.push('bug');
+            }
+            if (text.includes('ui') || text.includes('画面') || text.includes('css') || text.includes('デザイン')) {
+              labels.push('frontend');
+            }
+            if (text.includes('api') || text.includes('db') || text.includes('データベース') || text.includes('サーバー')) {
+              labels.push('backend');
+            }
+            if (text.includes('high') || text.includes('緊急') || text.includes('重大')) {
+              labels.push('priority/high');
+            }
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+              console.log(`Added labels: ${labels.join(', ')}`);
+            }
+
+      - name: Add to Project
+        if: always()
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/orgs/AcmeCorp-Engineering/projects/1
+          github-token: ${{ secrets.PROJECT_TOKEN }}

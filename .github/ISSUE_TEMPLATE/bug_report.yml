@@ -1,0 +1,41 @@
+name: "🐛 バグ報告"
+description: "バグ・不具合を報告する"
+labels: ["bug", "needs-triage"]
+body:
+  - type: dropdown
+    id: severity
+    attributes:
+      label: "重要度"
+      description: "このバグの影響度を選択してください"
+      options:
+        - "High - サービス停止・データ損失のリスク"
+        - "Medium - 機能の一部に影響"
+        - "Low - 軽微な問題"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "バグの説明"
+      description: "何が起きたか、期待される動作は何かを記述してください"
+      placeholder: "例: ダッシュボード画面でグラフが表示されない"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "再現手順"
+      description: "バグを再現するための手順を記述してください"
+      placeholder: |
+        1. '...' にアクセスする
+        2. '...' をクリックする
+        3. エラーが表示される
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "環境情報"
+      description: "ブラウザ・OS 等の情報"
+      placeholder: "例: Chrome 120 / macOS Sonoma"
